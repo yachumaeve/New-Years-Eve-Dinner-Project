@@ -1,0 +1,13 @@
+# k8s/aws-ebs-storageclass.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-gp3-fast
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true" # 標記為預設 StorageClass
+provisioner: ebs.csi.aws.com # 必須使用 CSI 驅動程式的名稱
+volumeBindingMode: WaitForFirstConsumer # 確保 PVC 在 Pod 被排程到節點後才綁定 EBS
+parameters:
+  type: gp3 # 推薦使用 gp3，性能優於 gp2 且價格更優
+  fsType: ext4 # 文件系統類型
+reclaimPolicy: Delete

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-config  
+  labels:
+    app: mysql
+type: Opaque
+data:
+  # Base64 編碼後的密碼。請將 'YOUR_BASE64_PASSWORD' 替換為您的密碼編碼。
+  # 範例：echo -n 'MySecurePassword123' | base64 => TXlTZWN1cmVQYXNzd29yZDEyMw==
+  db_name: dGVzdGRi
+  db_user: cm9vdA==
+  db_password: MXFhekBXU1g=
+

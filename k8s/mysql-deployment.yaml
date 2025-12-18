@@ -1,0 +1,61 @@
+# k8s/mysql-deployment.yaml
+# --- Service for internal communication ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: mysql
+spec:
+  # ClusterIP: 讓應用服務 (例如您的 Node.js/Java 後端) 可以在 K8s 內部存取
+  type: ClusterIP 
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+
+# --- Deployment for the MySQL Pod ---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql
+spec:
+  # 確保只有一個 MySQL 實例
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          # 使用官方 MySQL 8.0 映像
+          image: mysql:8.0 
+          ports:
+            - containerPort: 3306
+          env:
+            # 從 Secret 引用 root 密碼
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-root-password
+            # 初始化資料庫名稱 (可選)
+            - name: MYSQL_DATABASE
+              value: charitydb 
+          volumeMounts:
+            # 掛載點，這是 MySQL 儲存數據的地方
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            # 連結到 PVC 檔案中定義的 PersistentVolumeClaim
+            claimName: mysql-pv-claim
