@@ -13,10 +13,11 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend-container
-        image: maeveyang/frontend:latest
-        ports:
-        - containerPort: 80
+        - name: frontend-container
+          image: maeveyang/frontend:latest
+          imagePullPolicy: Always # 強制每次重啟 Pod 都去遠端拉取最新映像檔
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
