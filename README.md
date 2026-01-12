@@ -1,4 +1,4 @@
-## WishWithHeart - 認領心願平台
+## WishWithHeart - 新年新希望願望認領平台
 這是一個基於 Kubernetes (K8s) 架構開發的公益認領平台。後端採用 Flask 提供 RESTful API，前端使用 Angular 構建響應式介面，並部署於 AWS EC2 上的自建 K8s 叢集。
 
 ### 系統架構圖
@@ -34,4 +34,5 @@
    <img width="1712" height="1124" alt="image" src="https://github.com/user-attachments/assets/b0ddc077-323f-48a5-83bb-cd4f7f5dc71b" />
 
 4. 網頁展示
+   網址：https://www.wishwithheart.com/
    <img width="2872" height="1622" alt="image" src="https://github.com/user-attachments/assets/1ecba9fe-d4eb-4ea3-8c51-cc7356ae2f7d" />
